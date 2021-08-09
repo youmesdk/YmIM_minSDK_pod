@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "YmIM_minSDK_pod"
-  s.version      = "2.3.1.11174"
+  s.version      = "3.1.11174"
   s.summary      = "A short description of YmIM_minSDK_pod."
 
   s.description  = "YmIM_minSDK_pod"
