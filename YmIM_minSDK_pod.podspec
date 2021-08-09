@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
 
   s.author             = { "islandCw" => "871149538@qq.com" }
   s.platform     = :ios
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/youmesdk/YmIM_minSDK_pod.git", :tag => "#{s.version}" }
   s.requires_arc = true
 
