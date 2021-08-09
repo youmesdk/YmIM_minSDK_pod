@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
 
-  s.framework = 'CoreLocation','AudieoToolbox','AVFoundation','CoreTelephony','SystemConfiguration'
+  s.framework = 'CoreLocation','AudioToolbox','AVFoundation','CoreTelephony','SystemConfiguration'
   s.libraries = 'C++.1','sqlite3.0','z','resolv.9'
 
   s.source_files = "include/*.{h,m,mm}"
