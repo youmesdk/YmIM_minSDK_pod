@@ -10,6 +10,14 @@
 #ifndef YoumeIMMessage_h
 #define YoumeIMMessage_h
 
+//登录类型
+typedef enum
+{
+    YIMLogin_Type_Game = 0,    // 游戏模式
+	YIMLogin_Type_Social = 1,	// 社交模式
+	YIMLogin_Type_Unknow = 9999
+}YIMLoginTypeOC;
+
 //消息传输类型
 typedef enum
 {
@@ -250,8 +258,8 @@ typedef enum
 @property (nonatomic, assign) unsigned int  fileSize;
 //语音时长（单位：秒）
 @property (nonatomic, assign) unsigned int  audioTime;
-
-@property (nonatomic, assign) NSString*  localPath;
+//语音路径
+@property (nonatomic, retain) NSString*  localPath;
 
 @end
 

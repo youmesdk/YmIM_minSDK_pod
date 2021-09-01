@@ -28,7 +28,7 @@ public:
     virtual void OnJoinChatRoom(YIMErrorcode errorcode, const XCHAR* chatRoomID) override;
     //IYIMMessageCallback
     //发送消息状态
-    virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned int sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) override;
+    virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) override;
     
 	//上传显示进度
     virtual void OnUploadProgress(XUINT64 requestID, float percent) override;
@@ -40,7 +40,7 @@ public:
     virtual void OnRecvMessage( std::shared_ptr<IYIMMessage> pMessage) override;
     
     //语音消息的回掉
-    virtual void OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR* text, const XCHAR* audioPath, unsigned int audioTime, unsigned int sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) override;
+    virtual void OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR* text, const XCHAR* audioPath, unsigned int audioTime, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) override;
     //停止语音回调（调用StopAudioMessage停止语音之后，发送语音消息之前）
     virtual void OnStartSendAudioMessage(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR* text, const XCHAR* audioPath, unsigned int audioTime) override;
     
@@ -174,7 +174,7 @@ public:
      * @param comments：备注或验证信息
      * @param dealResult：处理结果	0：同意	1：拒绝
      */
-    virtual void OnDealBeRequestAddFriend(YIMErrorcode errorcode, const XCHAR* userID, const XCHAR* comments, int dealResult) override;
+    virtual void OnDealBeRequestAddFriend(YIMErrorcode errorcode, const XCHAR* userID, const XCHAR* comments, int dealResult, XUINT64 reqID) override;
     
     /*
      * 功能：请求添加好友结果通知(需要好友验证，待被请求方处理后回调)

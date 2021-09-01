@@ -27,10 +27,11 @@
 //+(void) SetServerZone:(YouMeIMServerZoneOC) zone;
 
 -(void)SetDelegate:(id<YIMCallbackProtocol>) outDelegate;
+-(void)SetMode:(int)mode;
 //初始化
 -(YIMErrorcodeOC)InitWithAppKey:(NSString *)strAppKey appSecurityKey:(NSString*)strAppSecurity serverZone:(YouMeIMServerZoneOC)serverZone;
 -(void) SetShortConnectionMode;
--(void) Login:(NSString *)userName password:(NSString *)password token:(NSString*) token callback:(loginCBType) callback;
+-(void) Login:(NSString *)userName password:(NSString *)password token:(NSString*) token loginType:(YIMLoginTypeOC) loginType lastMessageID:(unsigned long long)lastMessageID callback:(loginCBType) callback;
 -(void) JoinChatRoom:(NSString *)roomID callback:(joinRoomCBType)callback;
 -(void) LeaveChatRoom:(NSString *)roomID callback:(leaveRoomCBType) callback;
 -(void) LeaveAllChatRooms:(leaveAllRoomCBType)callback;
@@ -111,6 +112,9 @@
 //是否保存房间消息记录（默认不保存）
 //targets:房间ID(NSArray<NSString*>)
 -(YIMErrorcodeOC) SetRoomHistoryMessageSwitch:( NSArray * )targets save:(bool)save;
+//是否保存私聊消息记录（默认不保存）
+//save:是否保存
+-(YIMErrorcodeOC) SetPrivateHistoryMessageSwitch:(bool)save;
 
 // 文本翻译
 -(unsigned int) TranslateText:(NSString*)text  destLangCode:(LanguageCodeOC) destLangCode srcLangCode:(LanguageCodeOC) srcLangCode callback:(translateTextCompleteCBType)callback;
@@ -179,6 +183,8 @@
 
 //设置语音识别语言
 - (YIMErrorcodeOC) SetSpeechRecognizeLanguage:(SpeechLanguageOC) language;
+
+- (YIMErrorcodeOC) SetSpeechRecognizeLanguageByCode:(NSString*) languageCode;
 
 //设置仅识别语音文字，不发送语音消息; false:识别语音文字并发送语音消息，true:仅识别语音文字
 //- (YIMErrorcodeOC) SetOnlyRecognizeSpeechText:(bool)recognition;

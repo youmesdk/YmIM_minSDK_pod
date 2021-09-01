@@ -246,7 +246,7 @@ void YIMImplement::OnGetForbiddenSpeakInfo( YIMErrorcode errorcode, std::vector<
 
 //IYIMMessageCallback
 //发送消息状态
-void YIMImplement::OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned int sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) {
+void YIMImplement::OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) {
     dispatch_async(dispatch_get_main_queue(), ^{
         if([delegate respondsToSelector:@selector(OnSendMessageStatus:errorcode:sendTime:isForbidRoom:reasonType:forbidEndTime:)]){
             [delegate OnSendMessageStatus:requestID errorcode:(YIMErrorcodeOC)errorcode sendTime:sendTime isForbidRoom:isForbidRoom reasonType:reasonType forbidEndTime:forbidEndTime];
@@ -441,7 +441,7 @@ void YIMImplement::OnRecvMessage( std::shared_ptr<IYIMMessage> pMessage) {
 }
 
 //语音消息的回掉
-void YIMImplement::OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR* text,  const XCHAR* audioPath, unsigned int audioTime, unsigned int sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime,XUINT64 messageID)
+void YIMImplement::OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR* text,  const XCHAR* audioPath, unsigned int audioTime, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime,XUINT64 messageID)
 {
     NSString* messageTxt = [NSString stringWithUTF8String:text];
     NSString* audioPathStr = [NSString stringWithUTF8String:audioPath];
@@ -965,14 +965,14 @@ void YIMImplement::OnBeAddFriendNotify(const XCHAR* userID, const XCHAR* comment
     });
 }
 
-void YIMImplement::OnDealBeRequestAddFriend(YIMErrorcode errorcode, const XCHAR* userID, const XCHAR* comments, int dealResult)
+void YIMImplement::OnDealBeRequestAddFriend(YIMErrorcode errorcode, const XCHAR* userID, const XCHAR* comments, int dealResult, XUINT64 reqID)
 {
     NSString *strUserID = [NSString stringWithUTF8String:userID];
     NSString *strComments = [NSString stringWithUTF8String:comments];
     
     dispatch_sync(dispatch_get_main_queue(), ^{
         if ([delegate respondsToSelector:@selector(OnDealBeRequestAddFriend:userID:comments:dealResult:)]) {
-            [delegate OnDealBeRequestAddFriend:(YIMErrorcodeOC)errorcode userID:strUserID comments:strComments dealResult:dealResult];
+            [delegate OnDealBeRequestAddFriend:(YIMErrorcodeOC)errorcode userID:strUserID comments:strComments dealResult:dealResult reqID:reqID];
         }
         dealBeRequestAddFriendCBType callblock = [[YIMCallbackBlock GetInstance].dealBeRequestAddFriendCBBlocks objectForKey:strUserID];
         if(callblock){

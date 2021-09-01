@@ -46,14 +46,18 @@
     return (YIMErrorcodeOC)YIMManager::CreateInstance()->Init([strAppKey UTF8String], [strAppSecurity UTF8String], "");
 }
 
+-(void)SetMode:(int)mode{
+    YIMManager::CreateInstance()->SetMode(mode);
+}
+
 -(void) SetShortConnectionMode{
     YIMManager::CreateInstance()->SetShortConnectionMode();
 }
 
--(void) Login:(NSString *)userName password:(NSString *)password token:(NSString*) token callback:(loginCBType) callback{
+-(void) Login:(NSString *)userName password:(NSString *)password token:(NSString*) token loginType:(LoginType) loginType lastMessageID:(unsigned long long)lastMessageID callback:(loginCBType) callback{
     [YIMCallbackBlock GetInstance].loginCB = callback;
     
-    YIMErrorcodeOC code = (YIMErrorcodeOC)YIMManager::CreateInstance()->Login([userName UTF8String], [password UTF8String], [token UTF8String] );
+    YIMErrorcodeOC code = (YIMErrorcodeOC)YIMManager::CreateInstance()->Login([userName UTF8String], [password UTF8String], [token UTF8String], loginType, lastMessageID);
     
     if(code != YouMeIMCode_Success && [YIMCallbackBlock GetInstance].loginCB)
     {
@@ -454,12 +458,12 @@
 
 -(YIMErrorcodeOC) GetNewMessage:( NSArray * )targets {
     std::vector<XString> vecRooms;
-    
+    LoginType loginType;
     for( int i = 0 ; i < targets.count; i++ ){
         XString roomID = [ targets[i]  UTF8String ];
         vecRooms.push_back( roomID );
     }
-    return (YIMErrorcodeOC)YIMManager::CreateInstance()->GetMessageManager()->GetNewMessage(vecRooms);
+    return (YIMErrorcodeOC)YIMManager::CreateInstance()->GetMessageManager()->GetNewMessage(vecRooms,loginType);
 }
 
 -(YIMErrorcodeOC) SetRoomHistoryMessageSwitch:( NSArray * )targets save:(bool)save{
@@ -471,6 +475,10 @@
     }
     
     return (YIMErrorcodeOC)YIMManager::CreateInstance()->GetMessageManager()->SetRoomHistoryMessageSwitch( vecRooms, save);
+}
+
+-(YIMErrorcodeOC) SetPrivateHistoryMessageSwitch:(bool)save{
+    return (YIMErrorcodeOC)YIMManager::CreateInstance()->GetMessageManager()->SetPrivateHistoryMessageSwitch(save);
 }
 
 -(unsigned int) TranslateText:(NSString*)text  destLangCode:(LanguageCodeOC) destLangCode srcLangCode:(LanguageCodeOC) srcLangCode callback:(translateTextCompleteCBType)callback{
@@ -767,6 +775,14 @@
         return YouMeIMCode_NotLogin;
     }
     return (YIMErrorcodeOC) YIMManager::CreateInstance()->GetMessageManager()->SetSpeechRecognizeLanguage((SpeechLanguage)language);
+}
+
+- (YIMErrorcodeOC) SetSpeechRecognizeLanguageByCode:(NSString*) languageCode
+{
+    if (YIMManager::CreateInstance()->GetMessageManager() == NULL) {
+        return YouMeIMCode_NotLogin;
+    }
+    return (YIMErrorcodeOC) YIMManager::CreateInstance()->GetMessageManager()->SetSpeechRecognizeLanguageByCode( [languageCode UTF8String]);
 }
 
 //举报

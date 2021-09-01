@@ -153,6 +153,18 @@ enum ServerZone
 };
 
 /************************************************************************/
+/*                              登录类型                          */
+/************************************************************************/
+enum LoginType
+{
+	Login_Type_Game = 0,    // 游戏模式
+	Login_Type_Social = 1,	// 社交模式
+
+	Login_Type_Unknow = 9999
+};
+
+
+/************************************************************************/
 /*								登录 登出								*/
 /************************************************************************/
 class IYIMLoginCallback
@@ -403,7 +415,9 @@ enum YIMChatType
 	ChatType_Unknow = 0,
 	ChatType_PrivateChat = 1,	//私聊
 	ChatType_RoomChat = 2,		//聊天室
-	ChatType_Multi
+	ChatType_Multi = 3,
+	ChatType_SocialPrivateChat = 4,  //社交模式私聊
+	ChatType_SocialRoomChat = 5,	 //社交模式群聊
 };
 
 //文件类型
@@ -1002,12 +1016,12 @@ public:
 	* 功能：发送消息回调
 	* @param requestID：请求ID（与SendXXMessage发送消息的输出参数requestID一致）
 	* @param errorcode：错误码
-	* @param sendTime：发送时间戳
+	* @param sendTime：发送时间戳，精确到毫秒
 	* @param isForbidRoom：是否被禁言
 	* @param reasonType：禁言原因
 	* @param forbidEndTime：禁言结束时间
 	*/
-	virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned int sendTime, bool isForbidRoom, int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) {}
+	virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, XUINT64 sendTime, bool isForbidRoom, int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) {}
 
 	/*
 	* 功能：停止语音回调（发送端停止语音，发送语音消息之前，发送端可在此时显示消息）
@@ -1025,12 +1039,12 @@ public:
 	* @param text：语音识别结果
 	* @param audioPath：语音文件路径
 	* @param audioTime：语音时长（单位：秒）
-	* @param sendTime：发送时间戳
+	* @param sendTime：发送时间戳，精确到毫秒
 	* @param isForbidRoom：是否被禁言
 	* @param reasonType：禁言原因
 	* @param forbidEndTime：禁言结束时间
 	*/
-	virtual void OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR * text, const XCHAR * audioPath, unsigned int audioTime, unsigned int sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime,XUINT64 messageID) {}
+	virtual void OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR * text, const XCHAR * audioPath, unsigned int audioTime, XUINT64 sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime,XUINT64 messageID) {}
 
 	/*
 	* 功能：接收消息回调
@@ -1398,7 +1412,7 @@ public:
 	* @param vecRoomIDs：房间ID列表
 	* @return 错误码
 	*/
-	virtual YIMErrorcode GetNewMessage(const std::vector<XString>& vecRoomIDs) = 0;
+	virtual YIMErrorcode GetNewMessage(const std::vector<XString>& vecRoomIDs, LoginType loginType) = 0;
 
 	/*
 	* 功能：客户端上线，从服务器同步已发送消息的已读状态
@@ -1412,6 +1426,13 @@ public:
 	* @return 错误码
 	*/
 	virtual YIMErrorcode SetRoomHistoryMessageSwitch(const std::vector<XString>& vecRoomIDs, bool save) = 0;
+
+	/*
+	* 功能：是否保存私聊消息到本地历史记录，需要在初始化之后,login之前调用
+	* @param save：是否保存（默认不保存）
+	* @return 错误码
+	*/
+	virtual YIMErrorcode SetPrivateHistoryMessageSwitch(bool save) = 0;
 
 	/*
 	* 功能：是否保存房间消息到本地历史记录
@@ -1461,6 +1482,18 @@ public:
 	* @return 错误码
 	*/
 	virtual YIMErrorcode SetSpeechRecognizeLanguage(SpeechLanguage language) = 0;
+    
+    /*
+    * 功能：设置语音识别语言(目前只支持google语音识别)
+    * @param language：语言代码(如zh-CN, en-US ) *
+    *           Required* The language of the supplied audio as a
+    *           [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+    *           Example: "en-US".
+    *           See [Language Support](https://cloud.google.com/speech/docs/languages)
+    *           for a list of the currently supported language codes.
+    * @return 错误码
+    */
+    virtual YIMErrorcode SetSpeechRecognizeLanguageByCode( const XCHAR* languageCode ) = 0 ;
     
 	/*
 	* 功能：设置仅识别语音文字，不发送语音消息
@@ -1957,8 +1990,9 @@ public:
 	* @param userID：用户ID
 	* @param comments：备注或验证信息
 	* @param dealResult：处理结果	0：同意	1：拒绝
+	* @param reqID: 对应 DealAddFriend 中的reqID
 	*/
-	virtual void OnDealBeRequestAddFriend(YIMErrorcode errorcode, const XCHAR* userID, const XCHAR* comments, int dealResult){}
+	virtual void OnDealBeRequestAddFriend(YIMErrorcode errorcode, const XCHAR* userID, const XCHAR* comments, int dealResult, XUINT64 reqID){}
 
 	/*
 	* 功能：请求添加好友结果通知(需要好友验证，待被请求方处理后回调)
@@ -2043,6 +2077,9 @@ public:
 	static void SetAudioCacheDir(const XCHAR* audioCacheDir);
 	/************************************************************************/
     
+	//设置log目录
+	static int SetUserLogPath(XString & szLogDir);
+
 	//创建实例
 	static YIMManager* CreateInstance();
 	
@@ -2097,9 +2134,10 @@ public:
 	* @param userID：用户ID
 	* @param password：密码
 	* @param token：登录token（可以为空字符串，若需要token登录，需要服务端获取）
+	* @param loginType：聊天类型，Login_Type_Game默认只保留最多200条离线信息，Login_Type_Social可以选择配置时长
 	* @return 错误码
 	*/
-	virtual YIMErrorcode Login(const XCHAR* userID, const XCHAR* password, const XCHAR* token) = 0;
+	virtual YIMErrorcode Login(const XCHAR* userID, const XCHAR* password, const XCHAR* token, LoginType loginType, const XUINT64 messgaeID) = 0;
 	
 	/*
 	* 功能：登出

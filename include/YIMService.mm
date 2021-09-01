@@ -40,8 +40,8 @@
     return (YIMErrorcodeOC)YIMManager::CreateInstance()->Init([strAppKey UTF8String], [strAppSecurity UTF8String], "");
 }
 
--(YIMErrorcodeOC) Login:(NSString *)userName password:(NSString *)password token:(NSString*) token{
-    return (YIMErrorcodeOC)YIMManager::CreateInstance()->Login([userName UTF8String], [password UTF8String], [token UTF8String] );
+-(YIMErrorcodeOC) Login:(NSString *)userName password:(NSString *)password token:(NSString*) token loginType:(YIMLoginTypeOC) loginType lastMessageID:(unsigned long long)lastMessageID{
+    return (YIMErrorcodeOC)YIMManager::CreateInstance()->Login([userName UTF8String], [password UTF8String], [token UTF8String], (LoginType)loginType, lastMessageID);
 }
 
 -(YIMErrorcodeOC) JoinChatRoom:(NSString *)roomID{
@@ -166,12 +166,12 @@
 
 -(YIMErrorcodeOC) GetNewMessage:( NSArray * )targets {
     std::vector<XString> vecRooms;
-    
+    LoginType loginType=(LoginType)YIMLogin_Type_Game;
     for( int i = 0 ; i < targets.count; i++ ){
         XString roomID = [ targets[i]  UTF8String ];
         vecRooms.push_back( roomID );
     }
-    return (YIMErrorcodeOC)YIMManager::CreateInstance()->GetMessageManager()->GetNewMessage(vecRooms);
+    return (YIMErrorcodeOC)YIMManager::CreateInstance()->GetMessageManager()->GetNewMessage(vecRooms,loginType);
 }
 
 -(YIMErrorcodeOC) SetRoomHistoryMessageSwitch:( NSArray * )targets save:(bool)save{
@@ -183,6 +183,10 @@
     }
     
     return (YIMErrorcodeOC)YIMManager::CreateInstance()->GetMessageManager()->SetRoomHistoryMessageSwitch( vecRooms, save);
+}
+
+-(YIMErrorcodeOC) SetPrivateHistoryMessageSwitch:(bool)save{
+     return (YIMErrorcodeOC)YIMManager::CreateInstance()->GetMessageManager()->SetPrivateHistoryMessageSwitch(save);
 }
 
 -(YIMErrorcodeOC) TranslateText:(unsigned int*) requestID text:(NSString*)text  destLangCode:(LanguageCodeOC) destLangCode srcLangCode:(LanguageCodeOC) srcLangCode {

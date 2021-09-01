@@ -237,11 +237,11 @@ typedef enum
 
 //IYIMMessageCallback,消息相关回调
 //发送消息回调
-- (void) OnSendMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode sendTime:(unsigned int)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime;
+- (void) OnSendMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode sendTime:(unsigned long long)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime;
 
 - (void) OnUploadProgress:(unsigned long long) iRequestID percent:(float)percent;
 //发送语音消息回调
-- (void) OnSendAudioMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode strMessage:(NSString*)strMessage strAudioPath:(NSString*) strAudioPath audioTime:(unsigned int)audioTime sendTime:(unsigned int)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime;
+- (void) OnSendAudioMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode strMessage:(NSString*)strMessage strAudioPath:(NSString*) strAudioPath audioTime:(unsigned int)audioTime sendTime:(unsigned long long)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime;
 //停止语音回调（调用StopAudioMessage停止语音之后，发送语音消息之前）
 - (void) OnStartSendAudioMessage:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode
                        strMessage:(NSString*)strMessage strAudioPath:(NSString*) strAudioPath audioTime:(unsigned int)audioTime ;
@@ -330,8 +330,9 @@ typedef enum
 	* @param userID：用户ID
 	* @param comments：备注或验证信息
 	* @param dealResult：处理结果	0：同意	1：拒绝
+    * @param reqID: 对应 DealAddFriend 中的reqID
 	*/
-- (void) OnDealBeRequestAddFriend:(YIMErrorcodeOC) errorcode userID:(NSString*) userID comments:(NSString*) comments dealResult:(int) dealResult;
+- (void) OnDealBeRequestAddFriend:(YIMErrorcodeOC) errorcode userID:(NSString*) userID comments:(NSString*) comments dealResult:(int) dealResult reqID:(unsigned long long) reqID;
 
 /*
 	* 功能：删除好友结果回调

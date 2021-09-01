@@ -29,7 +29,7 @@
 //初始化
 -(YIMErrorcodeOC)InitWithAppKey:(NSString *)strAppKey appSecurityKey:(NSString*)strAppSecurity;
 
--(YIMErrorcodeOC) Login:(NSString *)userName password:(NSString *)password token:(NSString*) token ;
+-(YIMErrorcodeOC) Login:(NSString *)userName password:(NSString *)password token:(NSString*) token loginType:(YIMLoginTypeOC) loginType lastMessageID:(unsigned long long)lastMessageID;
 -(YIMErrorcodeOC) JoinChatRoom:(NSString *)roomID;
 -(YIMErrorcodeOC) LeaveChatRoom:(NSString *)roomID;
 -(YIMErrorcodeOC) LeaveAllChatRooms;
@@ -96,6 +96,9 @@
 //是否保存房间消息记录（默认不保存）
 //targets:房间ID(NSArray<NSString*>)
 -(YIMErrorcodeOC) SetRoomHistoryMessageSwitch:( NSArray * )targets save:(bool)save;
+//是否保存私聊消息记录（默认不保存）
+//save:是否保存
+-(YIMErrorcodeOC) SetPrivateHistoryMessageSwitch:(bool)save;
 
 // 文本翻译
 -(YIMErrorcodeOC) TranslateText:(unsigned int*) requestID text:(NSString*)text  destLangCode:(LanguageCodeOC) destLangCode srcLangCode:(LanguageCodeOC) srcLangCode;
