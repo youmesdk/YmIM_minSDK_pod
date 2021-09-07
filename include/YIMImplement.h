@@ -136,6 +136,13 @@ public:
      * commonts：根据需要决定是否重新获取用户信息
      */
     virtual void OnUserInfoChangeNotify(const XCHAR* userID) override;
+
+    /*
+	* 功能：设置用户在线状态通知
+	* @param bSuccess：设置状态是否成功
+	* @param operateType：操作类型
+	*/
+	virtual void OnSetUserOnlineStatus(bool bSuccess, IMAppStatus operateType) override;
     
     //好友接口相关回调
     /*

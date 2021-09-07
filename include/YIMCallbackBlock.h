@@ -61,6 +61,8 @@ typedef void(^blackFriendCBType)(YIMErrorcodeOC errorcode, int type, NSString* u
 typedef void(^queryFriendsCBType)(YIMErrorcodeOC errorcode, int type, int startIndex, NSArray* friends); //NSArray<IMUserBriefInfoOC>
 typedef void(^queryFriendRequestListCBType)(YIMErrorcodeOC errorcode, int startIndex, NSArray* requestList); //NSArray<IMFriendRequestInfoOC>
 
+typedef void(^setUserOnlineStatusCBType)(bool bSuccess, IMAppStatusOC operateType);
+
 
 @property (nonatomic, copy) loginCBType loginCB;
 @property (nonatomic, copy) logoutCBType logoutCB;
@@ -113,5 +115,7 @@ typedef void(^queryFriendRequestListCBType)(YIMErrorcodeOC errorcode, int startI
 @property (nonatomic, copy) blackFriendCBType blackFriendCB;
 @property (nonatomic, copy) queryFriendsCBType queryFriendsCB;
 @property (nonatomic, copy) queryFriendRequestListCBType queryFriendRequestListCB;
+
+@property (nonatomic, copy) setUserOnlineStatusCBType setUserOnlineStatusCB;
 
 @end

@@ -903,6 +903,19 @@ void YIMImplement::OnUserInfoChangeNotify(const XCHAR* userID)
     });
 }
 
+void YIMImplement::OnSetUserOnlineStatus(bool bSuccess, IMAppStatus operateType)
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([delegate respondsToSelector:@selector(OnSetUserOnlineStatus:operateType:)]) {
+            [delegate OnSetUserOnlineStatus:bSuccess operateType:(IMAppStatusOC)operateType];
+        }
+        if([YIMCallbackBlock GetInstance].setUserOnlineStatusCB){
+            [YIMCallbackBlock GetInstance].setUserOnlineStatusCB(bSuccess, (IMAppStatusOC)operateType);
+            [YIMCallbackBlock GetInstance].setUserOnlineStatusCB = nil;
+        }
+    });
+}
+
 void YIMImplement::OnFindUser(YIMErrorcode errorcode, std::list<std::shared_ptr<IYIMUserBriefInfo> >& users)
 {
     NSMutableArray* usersArray = [NSMutableArray arrayWithCapacity:users.size()];

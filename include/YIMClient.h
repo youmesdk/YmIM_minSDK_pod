@@ -140,9 +140,9 @@
 -(void) QueryUserStatus:( NSString * )userID callback:(queryUserStatusCBType)callback;
 
 //程序切到后台运行
--(void) OnPause:(bool)pauseReceiveMessage;
+-(void) OnPause:(bool)pauseReceiveMessage callback:(setUserOnlineStatusCBType)callback;
 //程序切到前台运行
--(void) OnResume;
+-(void) OnResume:(setUserOnlineStatusCBType)callback;
 
 //设置播放语音音量(volume:0.0-1.0)
 - (void) SetVolume:(float) volume;

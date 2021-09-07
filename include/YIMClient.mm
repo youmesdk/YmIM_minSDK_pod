@@ -605,11 +605,13 @@
 
 
 //程序切到后台运行
--(void) OnPause:(bool) pauseReceiveMessage{
+-(void) OnPause:(bool) pauseReceiveMessage callback:(setUserOnlineStatusCBType)callback{
+    [YIMCallbackBlock GetInstance].setUserOnlineStatusCB = callback;
     YIMManager::CreateInstance()->OnPause(pauseReceiveMessage);
 }
 //程序切到前台运行
--(void) OnResume{
+-(void) OnResume:(setUserOnlineStatusCBType)callback{
+    [YIMCallbackBlock GetInstance].setUserOnlineStatusCB = callback;
     YIMManager::CreateInstance()->OnResume();
 }
 

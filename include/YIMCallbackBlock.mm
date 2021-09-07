@@ -60,7 +60,8 @@
             _instance.deleteFriendCB = nil;
             _instance.blackFriendCB = nil;
             _instance.queryFriendsCB = nil;
-            _instance.queryFriendRequestListCB = nil;            
+            _instance.queryFriendRequestListCB = nil;
+            _instance.setUserOnlineStatusCB = nil;            
         }
     }
     return _instance;

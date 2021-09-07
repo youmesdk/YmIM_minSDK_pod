@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <list>
 #include <vector>
@@ -1735,6 +1735,13 @@ enum IMUserFoundPermission
     CAN_NOT_BE_FOUND     //不能被其它用户查找到
 };
 
+enum IMAppStatus
+{
+	YIMNONE,				//无
+	YIMPAUSE,				//停止
+	YIMRESUME,				//恢复
+};
+
 // 用户基本信息
 struct IMUserSettingInfo
 {
@@ -1840,6 +1847,13 @@ public:
 	* @param users：用户ID
 	*/
 	virtual void OnUserInfoChangeNotify(const XCHAR* userID){}
+
+	/*
+	* 功能：设置用户在线状态通知
+	* @param bSuccess：设置状态是否成功
+	* @param operateType：操作类型
+	*/
+	virtual void OnSetUserOnlineStatus(bool bSuccess, IMAppStatus operateType){}
 };
 
 

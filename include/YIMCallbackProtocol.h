@@ -82,6 +82,8 @@ typedef enum
     YouMeIMCode_NotBlack = 63,					//不在黑名单中
     YouMeIMCode_PhotoUrlTooLong = 64,           //头像url过长(>500 bytes)
     YouMeIMCode_PhotoSizeTooLarge = 65,         //头像太大（>100 kb）
+    YouMeIMCode_ChannelMemberOverflow = 66,	// 达到频道人数上限
+	YouMeIMCode_SetUserStatusFail = 67,          //设置用户信息失败
     
     YouMeIMCode_StopPlayFailBeforeStart = 66,
     
@@ -148,7 +150,12 @@ typedef enum
     YouMeIMServerZone_Unknow = 9999
 }YouMeIMServerZoneOC;
 
-
+typedef enum 
+{
+	NONE,				//无
+	PAUSE,				//停止
+	RESUME,				//恢复
+}IMAppStatusOC;
 
 @protocol YIMCallbackProtocol <NSObject>
 
@@ -198,6 +205,12 @@ typedef enum
  * commonts：根据需要决定是否重新获取用户信息
  */
 - (void) OnUserInfoChangeNotify:(NSString*) userID;
+
+/*
+* 功能：设置用户状态通知
+* @param bSuccess：设置状态是否成功
+*/
+- (void) OnSetUserOnlineStatus:(bool) bSuccess operateType:(IMAppStatusOC) operateType;
 
 /*
  * 功能：被邀请添加好友通知（需要验证）
