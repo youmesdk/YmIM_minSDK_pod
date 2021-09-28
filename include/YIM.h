@@ -1020,8 +1020,9 @@ public:
 	* @param isForbidRoom：是否被禁言
 	* @param reasonType：禁言原因
 	* @param forbidEndTime：禁言结束时间
+	* @param filePath：文件路径
 	*/
-	virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, XUINT64 sendTime, bool isForbidRoom, int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) {}
+	virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, XUINT64 sendTime, bool isForbidRoom, int reasonType, XUINT64 forbidEndTime, XUINT64 messageID, const XCHAR * filePath) {}
 
 	/*
 	* 功能：停止语音回调（发送端停止语音，发送语音消息之前，发送端可在此时显示消息）

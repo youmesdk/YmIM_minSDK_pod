@@ -21,9 +21,9 @@ typedef void(^getRoomMemberCountCBType)(YIMErrorcodeOC errorcode, NSString* chat
 
 typedef void(^leaveAllRoomCBType)(YIMErrorcodeOC errorcode);
 
-typedef void(^sendMessageStatusCBType)(YIMErrorcodeOC errorcode, unsigned int sendTime, bool isForbidRoom,int reasonType,unsigned long long forbidEndTime,unsigned long long messageID);
+typedef void(^sendMessageStatusCBType)(YIMErrorcodeOC errorcode, unsigned long long sendTime, bool isForbidRoom,int reasonType,unsigned long long forbidEndTime,unsigned long long messageID,NSString* filePath);
 typedef void(^uploadProgressCBType)(float percent);
-typedef void(^sendAudioMsgStatusCBType)(YIMErrorcodeOC errorcode, NSString* text, NSString* audioPath, unsigned int audioTime, unsigned int sendTime, bool isForbidRoom, int reasonType, unsigned long long forbidEndTime,unsigned long long messageID);
+typedef void(^sendAudioMsgStatusCBType)(YIMErrorcodeOC errorcode, NSString* text, NSString* audioPath, unsigned int audioTime, unsigned long long sendTime, bool isForbidRoom, int reasonType, unsigned long long forbidEndTime,unsigned long long messageID);
 typedef void(^startSendAudioMsgCBType)(YIMErrorcodeOC errorcode, NSString* text, NSString* audioPath, unsigned int audioTime);
 typedef void(^uploadSpeechStatusCBType)(YIMErrorcodeOC errorcode,  AudioSpeechInfo* audioSpeechInfo);
 

@@ -28,7 +28,7 @@ public:
     virtual void OnJoinChatRoom(YIMErrorcode errorcode, const XCHAR* chatRoomID) override;
     //IYIMMessageCallback
     //发送消息状态
-    virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID) override;
+    virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID, const XCHAR * filePath) override;
     
 	//上传显示进度
     virtual void OnUploadProgress(XUINT64 requestID, float percent) override;

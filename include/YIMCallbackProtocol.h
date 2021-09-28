@@ -250,7 +250,7 @@ typedef enum
 
 //IYIMMessageCallback,消息相关回调
 //发送消息回调
-- (void) OnSendMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode sendTime:(unsigned long long)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime;
+- (void) OnSendMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode sendTime:(unsigned long long)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime  filePath:(NSString*) filePath;
 
 - (void) OnUploadProgress:(unsigned long long) iRequestID percent:(float)percent;
 //发送语音消息回调
