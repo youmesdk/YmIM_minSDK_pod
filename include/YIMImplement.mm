@@ -422,6 +422,7 @@ YIMMessage* ConvertMessageToOC( IYIMMessage* pMessage ){
     message.senderID = [NSString stringWithUTF8String:pMessage->GetSenderID()];
     message.chatType = (YIMChatTypeOC)pMessage->GetChatType();
     message.messageID = pMessage->GetMessageID();
+    message.serverMessageID = pMessage->GetServerMessageID();
     message.createTime = pMessage->GetCreateTime();
     message.messageBody = msgBody;
     message.distance = pMessage->GetDistance();

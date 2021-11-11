@@ -542,6 +542,8 @@ public:
     virtual XUINT64 GetID() = 0;
 	//消息ID
 	virtual XUINT64 GetMessageID() = 0;
+	//社交模式下的ServierID
+	virtual XUINT64 GetServerMessageID() = 0;
 	//聊天类型
 	virtual YIMChatType GetChatType() = 0;
 	//接收者(聊天室：频道ID)

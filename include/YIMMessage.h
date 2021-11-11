@@ -303,6 +303,8 @@ typedef enum
 @interface YIMMessage: NSObject
 //消息ID
 @property (nonatomic, assign) unsigned long long messageID;
+//新增的社交场合ServerID
+@property (nonatomic, assign) unsigned long long serverMessageID;
 //聊天类型
 @property (nonatomic, assign) YIMChatTypeOC chatType;
 //接收者(聊天室：频道ID)
