@@ -208,7 +208,7 @@ void YIMImplement::OnTranslateTextComplete(YIMErrorcode errorcode, unsigned int 
 }
 
 //举报处理结果通知
-void YIMImplement::OnAccusationResultNotify(AccusationDealResult result, const XCHAR* userID, unsigned int accusationTime)
+void YIMImplement::OnAccusationResultNotify(AccusationDealResult result, const XCHAR* userID, XUINT64 accusationTime)
 {
     NSString *user = [NSString stringWithUTF8String:userID];
     dispatch_sync(dispatch_get_main_queue(), ^{

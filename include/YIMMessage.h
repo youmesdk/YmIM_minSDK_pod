@@ -314,7 +314,7 @@ typedef enum
 //消息体
 @property (nonatomic, retain) YIMMessageBodyBase* messageBody;
 //发送时间（秒）
-@property (nonatomic, assign) unsigned int createTime;
+@property (nonatomic, assign) unsigned long long createTime;
 //距离
 @property (nonatomic, assign) int distance;
 
@@ -463,7 +463,7 @@ typedef enum
 //消息内容
 @property (nonatomic, retain) NSString* messageContent;
 //会话时间（秒）
-@property (nonatomic, assign) unsigned int createTime;
+@property (nonatomic, assign) unsigned long long createTime;
 //未读消息数量
 @property (nonatomic, assign) unsigned int notReadMsgNum;
 
@@ -572,7 +572,7 @@ typedef enum
 //状态
 @property (nonatomic, assign) YIMAddFriendStatusOC status;
 // 时间
-@property (nonatomic, assign) unsigned int createTime;
+@property (nonatomic, assign) unsigned long long createTime;
 
 @end
 

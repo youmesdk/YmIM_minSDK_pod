@@ -553,7 +553,7 @@ public:
 	//消息体
 	virtual IYIMMessageBodyBase* GetMessageBody() = 0;
 	//发送时间（秒）
-	virtual unsigned int GetCreateTime() = 0;
+	virtual XUINT64 GetCreateTime() = 0;
 	//距离
 	virtual unsigned int GetDistance() = 0;
 	//是否已读
@@ -1103,7 +1103,7 @@ public:
 	* @param userID：用户ID
 	* @param accusationTime：举报时间戳
 	*/
-	virtual void OnAccusationResultNotify(AccusationDealResult result, const XCHAR* userID, unsigned int accusationTime) {}
+	virtual void OnAccusationResultNotify(AccusationDealResult result, const XCHAR* userID, XUINT64 accusationTime) {}
     
 	/*
 	* 功能：获取禁言回调
@@ -1615,7 +1615,7 @@ public:
 	//联系人
 	virtual const XCHAR* GetContactID() = 0;
 	//消息时间
-	virtual unsigned int GetCreateTime() = 0;
+	virtual XUINT64 GetCreateTime() = 0;
 	//消息内容
 	virtual const XCHAR* GetMessageContent() = 0;
 	//消息类型
@@ -1902,7 +1902,7 @@ public:
 	// 状态
 	virtual YIMAddFriendStatus GetStatus() = 0;
 	// 时间
-	virtual unsigned int GetCreateTime() = 0;
+	virtual XUINT64 GetCreateTime() = 0;
     // 请求号
     virtual XUINT64 GetReqID() = 0;
 };

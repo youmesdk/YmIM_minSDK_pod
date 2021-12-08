@@ -88,7 +88,7 @@ public:
     virtual void OnTranslateTextComplete(YIMErrorcode errorcode, unsigned int requestID, const XCHAR* text, LanguageCode srcLangCode, LanguageCode destLangCode) override ;
     
     //举报处理结果通知
-    virtual void OnAccusationResultNotify(AccusationDealResult result, const XCHAR* userID, unsigned int accusationTime) override;
+    virtual void OnAccusationResultNotify(AccusationDealResult result, const XCHAR* userID, XUINT64 accusationTime) override;
     
     virtual void OnGetForbiddenSpeakInfo( YIMErrorcode errorcode, std::vector< std::shared_ptr<IYIMForbidSpeakInfo> > vecForbiddenSpeakInfos ) override;
     //屏蔽/解除屏蔽用户消息回调

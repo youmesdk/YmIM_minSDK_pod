@@ -179,7 +179,7 @@ typedef enum
 - (void) OnRecordVolumeChange:(float) volume;
 
 // 举报处理结果通知
-- (void)OnAccusationResultNotify:(AccusationDealResultOC)result userID:(NSString*)userID accusationTime:(unsigned int)accusationTime;
+- (void)OnAccusationResultNotify:(AccusationDealResultOC)result userID:(NSString*)userID accusationTime:(unsigned long)accusationTime;
 
 //语音消息识别的文字返回
 - (void)OnGetRecognizeSpeechText:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC)errorcode text:(NSString*)text;
