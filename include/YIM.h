@@ -517,6 +517,7 @@ public:
 	virtual const XCHAR* GetExtraParam() = 0;
 	//文件路径
 	virtual const XCHAR* GetLocalPath() = 0;
+	virtual const XCHAR* GetFileUrl()  = 0;
 };
 
 //礼物

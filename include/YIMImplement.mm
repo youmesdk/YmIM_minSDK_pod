@@ -382,6 +382,7 @@ YIMMessage* ConvertMessageToOC( IYIMMessage* pMessage ){
             
             fileMsg.fileExtension = [NSString stringWithUTF8String:pMsgFile->GetFileExtension()];
             fileMsg.extraParam = [NSString stringWithUTF8String:pMsgFile->GetExtraParam()];
+            fileMsg.fileURL = [NSString stringWithUTF8String:pMsgFile->GetFileUrl()];
 
             msgBody = fileMsg;
         }

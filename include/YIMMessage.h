@@ -1,4 +1,4 @@
-//
+﻿//
 //  YIMMessage.h
 //  YoumeIMUILib
 //
@@ -282,6 +282,8 @@ typedef enum
 @property (nonatomic, assign) YIMFileTypeOC  fileType;
 //发送文件附加信息（SendFile传入，格式及如何解析由调用方自定）
 @property (nonatomic, retain) NSString* extraParam;
+
+@property (nonatomic, retain) NSString* fileURL;
 
 @end
 
