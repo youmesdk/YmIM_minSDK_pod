@@ -250,11 +250,11 @@ typedef enum
 
 //IYIMMessageCallback,消息相关回调
 //发送消息回调
-- (void) OnSendMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode sendTime:(unsigned long long)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime  filePath:(NSString*) filePath;
+- (void) OnSendMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode sendTime:(unsigned long long)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime  filePath:(NSString*) filePath fileURL:(NSString*) fileURL;
 
 - (void) OnUploadProgress:(unsigned long long) iRequestID percent:(float)percent;
 //发送语音消息回调
-- (void) OnSendAudioMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode strMessage:(NSString*)strMessage strAudioPath:(NSString*) strAudioPath audioTime:(unsigned int)audioTime sendTime:(unsigned long long)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime;
+- (void) OnSendAudioMessageStatus:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode strMessage:(NSString*)strMessage strAudioPath:(NSString*) strAudioPath audioTime:(unsigned int)audioTime sendTime:(unsigned long long)sendTime isForbidRoom:(bool) isForbidRoom   reasonType:(int)reasonType forbidEndTime:(unsigned long long)forbidEndTime fileURL:(NSString*) fileURL;
 //停止语音回调（调用StopAudioMessage停止语音之后，发送语音消息之前）
 - (void) OnStartSendAudioMessage:(unsigned long long) iRequestID errorcode:(YIMErrorcodeOC) errorcode
                        strMessage:(NSString*)strMessage strAudioPath:(NSString*) strAudioPath audioTime:(unsigned int)audioTime ;

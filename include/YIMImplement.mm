@@ -246,14 +246,16 @@ void YIMImplement::OnGetForbiddenSpeakInfo( YIMErrorcode errorcode, std::vector<
 
 //IYIMMessageCallback
 //发送消息状态
-void YIMImplement::OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID, const XCHAR * filePath) {
+void YIMImplement::OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID, const XCHAR * filePath, const XCHAR * fileURL) {
+    NSString *sFilePath = [NSString stringWithUTF8String:filePath];
+    NSString *sFileURL = [NSString stringWithUTF8String:fileURL];
     dispatch_async(dispatch_get_main_queue(), ^{
-        if([delegate respondsToSelector:@selector(OnSendMessageStatus:errorcode:sendTime:isForbidRoom:reasonType:forbidEndTime:filePath:)]){
-            [delegate OnSendMessageStatus:requestID errorcode:(YIMErrorcodeOC)errorcode sendTime:sendTime isForbidRoom:isForbidRoom reasonType:reasonType forbidEndTime:forbidEndTime filePath:[NSString stringWithUTF8String:filePath]];
+        if([delegate respondsToSelector:@selector(OnSendMessageStatus:errorcode:sendTime:isForbidRoom:reasonType:forbidEndTime:filePath:fileURL:)]){
+            [delegate OnSendMessageStatus:requestID errorcode:(YIMErrorcodeOC)errorcode sendTime:sendTime isForbidRoom:isForbidRoom reasonType:reasonType forbidEndTime:forbidEndTime filePath:sFilePath fileURL:sFileURL];
         }
         sendMessageStatusCBType callblock = [[YIMCallbackBlock GetInstance].sendMessageCBBlocks objectForKey:[NSNumber numberWithUnsignedLongLong:requestID]];
         if(callblock){
-            callblock((YIMErrorcodeOC)errorcode,sendTime,isForbidRoom,reasonType,forbidEndTime,messageID,[NSString stringWithUTF8String:filePath]);
+            callblock((YIMErrorcodeOC)errorcode,sendTime,isForbidRoom,reasonType,forbidEndTime,messageID,sFilePath,sFileURL);
             callblock = nil;
             [[YIMCallbackBlock GetInstance].sendMessageCBBlocks removeObjectForKey:[NSNumber numberWithUnsignedLongLong:requestID]];
         }
@@ -443,19 +445,20 @@ void YIMImplement::OnRecvMessage( std::shared_ptr<IYIMMessage> pMessage) {
 }
 
 //语音消息的回掉
-void YIMImplement::OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR* text,  const XCHAR* audioPath, unsigned int audioTime, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime,XUINT64 messageID)
+void YIMImplement::OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR* text,  const XCHAR* audioPath, unsigned int audioTime, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime,XUINT64 messageID,const XCHAR* audioURL)
 {
     NSString* messageTxt = [NSString stringWithUTF8String:text];
     NSString* audioPathStr = [NSString stringWithUTF8String:audioPath];
+    NSString* audioURLStr = [NSString stringWithUTF8String:audioURL];
     dispatch_async(dispatch_get_main_queue(), ^{
-        if([delegate respondsToSelector:@selector(OnSendAudioMessageStatus:errorcode:strMessage:strAudioPath:audioTime:sendTime:isForbidRoom:reasonType:forbidEndTime:)]){
-            [delegate OnSendAudioMessageStatus:requestID errorcode:(YIMErrorcodeOC)errorcode strMessage:messageTxt strAudioPath:audioPathStr audioTime:audioTime sendTime:sendTime isForbidRoom:isForbidRoom reasonType:reasonType forbidEndTime:forbidEndTime];
+        if([delegate respondsToSelector:@selector(OnSendAudioMessageStatus:errorcode:strMessage:strAudioPath:audioTime:sendTime:isForbidRoom:reasonType:forbidEndTime:fileURL:)]){
+            [delegate OnSendAudioMessageStatus:requestID errorcode:(YIMErrorcodeOC)errorcode strMessage:messageTxt strAudioPath:audioPathStr audioTime:audioTime sendTime:sendTime isForbidRoom:isForbidRoom reasonType:reasonType forbidEndTime:forbidEndTime fileURL:audioURLStr];
         }
         
         sendAudioMsgStatusCBType callblock = [[YIMCallbackBlock GetInstance].sendAudioMsgCBBlocks objectForKey:[NSNumber numberWithUnsignedLongLong:requestID]];
         if(callblock)
         {
-            callblock((YIMErrorcodeOC)errorcode,messageTxt,audioPathStr,audioTime,sendTime,isForbidRoom,reasonType,forbidEndTime, messageID);
+            callblock((YIMErrorcodeOC)errorcode,messageTxt,audioPathStr,audioTime,sendTime,isForbidRoom,reasonType,forbidEndTime, messageID, audioURLStr);
             callblock = nil;
             [[YIMCallbackBlock GetInstance].sendAudioMsgCBBlocks removeObjectForKey:[NSNumber numberWithUnsignedLongLong:requestID]];
         }

@@ -89,6 +89,7 @@ enum YIMErrorcode
     YIMErrorcode_PhotoUrlTooLong = 64,          //头像url过长(>500 bytes)
     YIMErrorcode_PhotoSizeTooLarge = 65,        //头像太大（>100 kb）
 	YIMErrorcode_ChannelMemberOverflow = 66,	// 达到频道人数上限
+	YIMErrorcode_SetUserStatusFail = 67,          //设置用户信息失败
 
 	//服务器的错误码
 	YIMErrorcode_ALREADYFRIENDS = 1000,
@@ -193,6 +194,13 @@ public:
 /************************************************************************/
 /*                              频道接口								*/
 /************************************************************************/
+enum UserOnlineStatus
+{
+	USER_ONLINE_STATUS_ACTIVE = 0,	 // 在线状态，活跃的
+	USER_ONLINE_STATUS_INACTIVE = 1, // 在线状态，非活跃的
+
+	USER_ONLINE_STATUS_UNKONOW = 9999, // 在线状态，未知的
+};
 
 class YIMChatRoomManager
 {
@@ -1023,9 +1031,9 @@ public:
 	* @param isForbidRoom：是否被禁言
 	* @param reasonType：禁言原因
 	* @param forbidEndTime：禁言结束时间
-	* @param filePath：文件路径
+	* @param filePath：文件消息路径
 	*/
-	virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, XUINT64 sendTime, bool isForbidRoom, int reasonType, XUINT64 forbidEndTime, XUINT64 messageID, const XCHAR * filePath) {}
+	virtual void OnSendMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, XUINT64 sendTime, bool isForbidRoom, int reasonType, XUINT64 forbidEndTime, XUINT64 messageID, const XCHAR* filePath,const XCHAR* fileURL) {}
 
 	/*
 	* 功能：停止语音回调（发送端停止语音，发送语音消息之前，发送端可在此时显示消息）
@@ -1048,7 +1056,7 @@ public:
 	* @param reasonType：禁言原因
 	* @param forbidEndTime：禁言结束时间
 	*/
-	virtual void OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR * text, const XCHAR * audioPath, unsigned int audioTime, XUINT64 sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime,XUINT64 messageID) {}
+	virtual void OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR * text, const XCHAR * audioPath, unsigned int audioTime, XUINT64 sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime,XUINT64 messageID,const XCHAR * audioURL) {}
 
 	/*
 	* 功能：接收消息回调
@@ -1433,7 +1441,7 @@ public:
 
 	/*
 	* 功能：是否保存私聊消息到本地历史记录，需要在初始化之后,login之前调用
-	* @param save：是否保存（默认不保存）
+	* @param save：是否保存（默认保存）
 	* @return 错误码
 	*/
 	virtual YIMErrorcode SetPrivateHistoryMessageSwitch(bool save) = 0;
@@ -1741,9 +1749,9 @@ enum IMUserFoundPermission
 
 enum IMAppStatus
 {
-	YIMNONE,				//无
-	YIMPAUSE,				//停止
-	YIMRESUME,				//恢复
+    YIMNONE,                //无
+    YIMPAUSE,                //停止
+    YIMRESUME,                //恢复
 };
 
 // 用户基本信息
