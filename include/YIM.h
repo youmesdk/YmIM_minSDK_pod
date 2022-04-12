@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <list>
 #include <vector>
@@ -176,7 +176,7 @@ public:
 	* @param errorcode：错误码
 	* @param userID：用户ID
 	*/
-	virtual void OnLogin(YIMErrorcode errorcode, const XCHAR * userID) {}
+	virtual void OnLogin(YIMErrorcode errorcode, const XCHAR * userID, XUINT64 maxSocialMsgID) {}
 
 	/*
 	* 功能：登出回调
@@ -525,6 +525,7 @@ public:
 	virtual const XCHAR* GetExtraParam() = 0;
 	//文件路径
 	virtual const XCHAR* GetLocalPath() = 0;
+
 	virtual const XCHAR* GetFileUrl()  = 0;
 };
 
@@ -1062,7 +1063,7 @@ public:
 	* 功能：接收消息回调
 	* @param message：消息
 	*/
-	virtual void OnRecvMessage( std::shared_ptr<IYIMMessage> message) {}
+	virtual void OnRecvMessage( std::list<std::shared_ptr<IYIMMessage> > messageList) {}
 
 	/*
 	* 功能：获取本地历史消息纪录回调
@@ -1441,7 +1442,7 @@ public:
 
 	/*
 	* 功能：是否保存私聊消息到本地历史记录，需要在初始化之后,login之前调用
-	* @param save：是否保存（默认保存）
+	* @param save：是否保存（默认不保存）
 	* @return 错误码
 	*/
 	virtual YIMErrorcode SetPrivateHistoryMessageSwitch(bool save) = 0;
@@ -1749,9 +1750,9 @@ enum IMUserFoundPermission
 
 enum IMAppStatus
 {
-    YIMNONE,                //无
-    YIMPAUSE,                //停止
-    YIMRESUME,                //恢复
+	NONE,				//无
+	PAUSE,				//停止
+	RESUME,				//恢复
 };
 
 // 用户基本信息

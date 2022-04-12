@@ -167,7 +167,7 @@ typedef enum
 - (void) OnUserLeaveRoom:(NSString*)roomId userID:(NSString*)userId;
 
 //收到消息
-- (void) OnRecvMessage:(YIMMessage*) pMessage;
+- (void) OnRecvMessage:(NSArray*) pMessage;
 
 //新消息通知（只有SetReceiveMessageSwitch设置为不自动接收消息，才会收到该回调）
 - (void) OnReceiveMessageNotify:(YIMChatTypeOC)chatType targetID:(NSString*)targetID;
@@ -245,7 +245,7 @@ typedef enum
 /***********  非必须实现的回调接口  **********/
 
 // 登录 登出 回调
-- (void) OnLogin:(YIMErrorcodeOC) errorcode userID:(NSString*) userID;
+- (void) OnLogin:(YIMErrorcodeOC) errorcode userID:(NSString*) userID maxSocialMsgID:(unsigned long long)maxSocialMsgID;
 - (void) OnLogout:(YIMErrorcodeOC) errorcode;
 
 //IYIMMessageCallback,消息相关回调

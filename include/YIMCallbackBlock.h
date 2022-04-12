@@ -11,7 +11,7 @@
 
 +(YIMCallbackBlock*)GetInstance;
 
-typedef void(^loginCBType)(YIMErrorcodeOC errorcode, NSString* userID);
+typedef void(^loginCBType)(YIMErrorcodeOC errorcode, NSString* userID,unsigned long long maxSocialMsgID);
 typedef void(^logoutCBType)(YIMErrorcodeOC errorcode);
 
 typedef void(^joinRoomCBType)(YIMErrorcodeOC errorcode,NSString* roomID);

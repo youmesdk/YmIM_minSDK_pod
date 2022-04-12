@@ -72,17 +72,17 @@ YIMImplement::~YIMImplement ()
 
 //implement callback
 //IYIMLoginCallback 目前用到的回调
-void YIMImplement::OnLogin(YIMErrorcode errorcode, const XCHAR* userID){
+void YIMImplement::OnLogin(YIMErrorcode errorcode, const XCHAR* userID, XUINT64 maxSocialMsgID){
     NSString *uid=nil;
     if(errorcode == YIMErrorcode_Success){
         uid = [NSString stringWithCString:userID encoding:NSUTF8StringEncoding];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        if([delegate respondsToSelector:@selector(OnLogin:userID:)]){
-            [delegate OnLogin:(YIMErrorcodeOC)errorcode userID:uid];
+        if([delegate respondsToSelector:@selector(OnLogin:userID:maxSocialMsgID)]){
+            [delegate OnLogin:(YIMErrorcodeOC)errorcode userID:uid maxSocialMsgID:maxSocialMsgID];
         }
         if([YIMCallbackBlock GetInstance].loginCB){
-            [YIMCallbackBlock GetInstance].loginCB ((YIMErrorcodeOC)errorcode,uid);
+            [YIMCallbackBlock GetInstance].loginCB ((YIMErrorcodeOC)errorcode,uid,maxSocialMsgID);
             [YIMCallbackBlock GetInstance].loginCB = nil;
         }
     });
@@ -434,11 +434,17 @@ YIMMessage* ConvertMessageToOC( IYIMMessage* pMessage ){
     return message;
 }
 //接收到用户发来的消息
-void YIMImplement::OnRecvMessage( std::shared_ptr<IYIMMessage> pMessage) {
+void YIMImplement::OnRecvMessage( std::list<std::shared_ptr<IYIMMessage> > messageList) {
+    NSMutableArray* arr = [NSMutableArray arrayWithCapacity:20];
+    std::list<std::shared_ptr<IYIMMessage> >::iterator it = messageList.begin();
+    for(; it != messageList.end(); ++it ){
+        YIMMessage* msg = ConvertMessageToOC( it->get() );
+        [arr addObject: msg ];
+    }
     YIMMessage* message = ConvertMessageToOC( pMessage.get() );
     dispatch_async(dispatch_get_main_queue(), ^{
         if([delegate respondsToSelector:@selector(OnRecvMessage:)]){
-            [delegate OnRecvMessage:message];
+            [delegate OnRecvMessage:arr];
         }
     });
 

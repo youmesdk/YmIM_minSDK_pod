@@ -23,7 +23,7 @@ public:
     
 public:
     //IYIMLoginCallback 目前用到的回调
-    virtual void OnLogin(YIMErrorcode errorcode,const XCHAR* userID) override;
+    virtual void OnLogin(YIMErrorcode errorcode,const XCHAR* userID, XUINT64 maxSocialMsgID) override;
     virtual void OnLogout(YIMErrorcode errorcode) override;
     virtual void OnJoinChatRoom(YIMErrorcode errorcode, const XCHAR* chatRoomID) override;
     //IYIMMessageCallback
@@ -37,7 +37,7 @@ public:
     virtual void OnUpdateReadStatus(const XCHAR* recvId, int chatType, XUINT64 msgSerial) override;
     
 	//接收到用户发来的消息
-    virtual void OnRecvMessage( std::shared_ptr<IYIMMessage> pMessage) override;
+    virtual void OnRecvMessage( std::list<std::shared_ptr<IYIMMessage> > messageList) override;
     
     //语音消息的回掉
     virtual void OnSendAudioMessageStatus(XUINT64 requestID, YIMErrorcode errorcode, const XCHAR* text, const XCHAR* audioPath, unsigned int audioTime, unsigned long long sendTime, bool isForbidRoom,  int reasonType, XUINT64 forbidEndTime, XUINT64 messageID,const XCHAR * audioURL) override;
