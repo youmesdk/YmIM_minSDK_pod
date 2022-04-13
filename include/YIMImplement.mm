@@ -78,7 +78,7 @@ void YIMImplement::OnLogin(YIMErrorcode errorcode, const XCHAR* userID, XUINT64 
         uid = [NSString stringWithCString:userID encoding:NSUTF8StringEncoding];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        if([delegate respondsToSelector:@selector(OnLogin:userID:maxSocialMsgID)]){
+        if([delegate respondsToSelector:@selector(OnLogin:userID:maxSocialMsgID:)]){
             [delegate OnLogin:(YIMErrorcodeOC)errorcode userID:uid maxSocialMsgID:maxSocialMsgID];
         }
         if([YIMCallbackBlock GetInstance].loginCB){
@@ -441,7 +441,7 @@ void YIMImplement::OnRecvMessage( std::list<std::shared_ptr<IYIMMessage> > messa
         YIMMessage* msg = ConvertMessageToOC( it->get() );
         [arr addObject: msg ];
     }
-    YIMMessage* message = ConvertMessageToOC( pMessage.get() );
+    //YIMMessage* message = ConvertMessageToOC( pMessage.get() );
     dispatch_async(dispatch_get_main_queue(), ^{
         if([delegate respondsToSelector:@selector(OnRecvMessage:)]){
             [delegate OnRecvMessage:arr];

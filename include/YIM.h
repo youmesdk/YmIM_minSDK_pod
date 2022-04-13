@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <list>
 #include <vector>
@@ -1750,9 +1750,9 @@ enum IMUserFoundPermission
 
 enum IMAppStatus
 {
-	NONE,				//无
-	PAUSE,				//停止
-	RESUME,				//恢复
+	YIMNONE,				//无
+	YIMPAUSE,				//停止
+	YIMRESUME,				//恢复
 };
 
 // 用户基本信息
