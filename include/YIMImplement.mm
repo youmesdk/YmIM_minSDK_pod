@@ -430,6 +430,7 @@ YIMMessage* ConvertMessageToOC( IYIMMessage* pMessage ){
     message.messageBody = msgBody;
     message.distance = pMessage->GetDistance();
     message.isRead = pMessage->IsRead();
+    message.isPending = pMessage->IsPending();
 
     return message;
 }

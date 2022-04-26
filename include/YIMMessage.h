@@ -322,6 +322,8 @@ typedef enum
 
 @property (nonatomic, assign) BOOL isRead;
 
+@property (nonatomic, assign) BOOL isPending;
+
 
 @end
 

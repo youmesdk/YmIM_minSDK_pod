@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <list>
 #include <vector>
@@ -568,6 +568,8 @@ public:
 	virtual unsigned int GetDistance() = 0;
 	//是否已读
 	virtual bool IsRead() = 0;
+	//消息是否还在接收中，比如有100条离线消息，到第100条时，这个状态才会置为false
+	virtual bool IsPending() = 0;
 };
 
 class IAudioSpeechInfo
